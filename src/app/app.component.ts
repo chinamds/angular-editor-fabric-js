@@ -151,14 +151,14 @@ export class AppComponent {
       image.set({
         left: 10,
         top: 10,
+        dest_width: 150,
+        dest_hight: 150,
         angle: 0,
         padding: 10,
-        cornersize: 10,
+        //cornersize: 10,
         hasRotatingPoint: true,
         peloas: 12
       });
-      image.setWidth(150);
-      image.setHeight(150);
       this.extend(image, this.randomId());
       this.canvas.add(image);
       this.selectItemAfterAdded(image);
@@ -173,13 +173,15 @@ export class AppComponent {
         image.set({
           left: 10,
           top: 10,
+          dest_width: 200,
+          dest_hight: 200,
           angle: 0,
           padding: 10,
-          cornersize: 10,
+          //cornersize: 10,
           hasRotatingPoint: true
         });
-        image.setWidth(200);
-        image.setHeight(200);
+        /*image.setWidth(200);
+        image.setHeight(200);*/
         this.extend(image, this.randomId());
         this.canvas.add(image);
         this.selectItemAfterAdded(image);
@@ -323,7 +325,7 @@ export class AppComponent {
 
   clone() {
     let activeObject = this.canvas.getActiveObject(),
-      activeGroup = this.canvas.getActiveGroup();
+      activeGroup = this.canvas.getActiveObjects();
 
     if (activeObject) {
       let clone;
@@ -467,7 +469,7 @@ export class AppComponent {
 
   removeSelected() {
     let activeObject = this.canvas.getActiveObject(),
-      activeGroup = this.canvas.getActiveGroup();
+      activeGroup = this.canvas.getActiveObjects();
 
     if (activeObject) {
       this.canvas.remove(activeObject);
@@ -485,7 +487,7 @@ export class AppComponent {
 
   bringToFront() {
     let activeObject = this.canvas.getActiveObject(),
-      activeGroup = this.canvas.getActiveGroup();
+      activeGroup = this.canvas.getActiveObjects();
 
     if (activeObject) {
       activeObject.bringToFront();
@@ -502,7 +504,7 @@ export class AppComponent {
 
   sendToBack() {
     let activeObject = this.canvas.getActiveObject(),
-      activeGroup = this.canvas.getActiveGroup();
+      activeGroup = this.canvas.getActiveObjects();
 
     if (activeObject) {
       activeObject.sendToBack();
