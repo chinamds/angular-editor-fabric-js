@@ -172,15 +172,15 @@
             <div class="card">
                 <div class="card-header">Custom</div>
                 <div class="card-body">
-                    <div class="custom-item" *ngIf="selected  && selected.type == 'group'">Group Selected</div>
+                    <div class="custom-item" *ngIf="selected  && selected.type == 'activeSelection'">Group Selected</div>
                     <div class="custom-item" *ngIf="!selected">No items selected</div>
-                    <div class="custom-item" *ngIf="selected && selected.type != 'group'">
+                    <div class="custom-item" *ngIf="selected && selected.type != 'activeSelection'">
                         <div class="custom-item-title">ID</div>
                         <div class="custom-item-body">
                             <input type="text" class="form-control" [(ngModel)]="props.id" (keyup)="setId()">
                         </div>
                     </div>
-                    <div class="custom-item" *ngIf="selected && selected.type != 'group'">
+                    <div class="custom-item" *ngIf="selected && selected.type != 'activeSelection'">
                         <div class="custom-item-title">Opacity</div>
                         <div class="custom-item-body">
                             <input type="range" [(ngModel)]="props.opacity" (change)="setOpacity()">{{props.opacity}}</div>

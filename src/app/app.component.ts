@@ -12,7 +12,7 @@ declare const fabric: any;
 export class AppComponent {
 
   private canvas: any;
-  private props: any = {
+  protected props: any = {
     canvasFill: '#ffffff',
     canvasImage: '',
     id: null,
@@ -40,13 +40,12 @@ export class AppComponent {
   private textEditor: boolean = false;
   private imageEditor: boolean = false;
   private figureEditor: boolean = false;
-  private selected: any;
+  protected selected: any;
 
   constructor() { }
 
   ngOnInit() {
-
-    //setup front side canvas
+    // setup front side canvas
     this.canvas = new fabric.Canvas('canvas', {
       hoverCursor: 'pointer',
       selection: true,
@@ -56,8 +55,7 @@ export class AppComponent {
     this.canvas.on({
       'object:moving': (e) => { },
       'object:modified': (e) => { },
-      'object:selected': (e) => {
-
+      'selection:created': (e) => {
         let selectedObject = e.target;
         this.selected = selectedObject
         selectedObject.hasRotatingPoint = true;
@@ -66,7 +64,7 @@ export class AppComponent {
 
         this.resetPanels();
 
-        if (selectedObject.type !== 'group' && selectedObject) {
+        if (selectedObject && selectedObject.type !== 'activeSelection') {
 
           this.getId();
           this.getOpacity();
@@ -115,15 +113,13 @@ export class AppComponent {
 
   /*------------------------Block elements------------------------*/
 
-  //Block "Size"
-
+  // Block "Size"
   changeSize(event: any) {
     this.canvas.setWidth(this.size.width);
     this.canvas.setHeight(this.size.height);
   }
 
-  //Block "Add text"
-
+  // Block "Add text"
   addText() {
     let textString = this.textString;
     let text = new fabric.IText(textString, {
@@ -138,8 +134,8 @@ export class AppComponent {
       hasRotatingPoint: true
     });
     this.extend(text, this.randomId());
-    this.canvas.add(text);
-    this.selectItemAfterAdded(text);
+    this.canvas.add(text).setActiveObject(text);
+    // this.selectItemAfterAdded(text);
     this.textString = '';
   }
 
@@ -155,13 +151,13 @@ export class AppComponent {
         dest_hight: 150,
         angle: 0,
         padding: 10,
-        //cornersize: 10,
+        // cornersize: 10,
         hasRotatingPoint: true,
         peloas: 12
       });
       this.extend(image, this.randomId());
-      this.canvas.add(image);
-      this.selectItemAfterAdded(image);
+      this.canvas.add(image).setActiveObject(image);
+      // this.selectItemAfterAdded(image);
     });
   }
 
@@ -183,8 +179,8 @@ export class AppComponent {
         /*image.setWidth(200);
         image.setHeight(200);*/
         this.extend(image, this.randomId());
-        this.canvas.add(image);
-        this.selectItemAfterAdded(image);
+        this.canvas.add(image).setActiveObject(image);
+        // this.selectItemAfterAdded(image);
       });
     }
   }
@@ -201,10 +197,9 @@ export class AppComponent {
 
   removeWhite(url) {
     this.url = '';
-  };
+  }
 
-  //Block "Add figure"
-
+  // Block "Add figure"
   addFigure(figure) {
     let add: any;
     switch (figure) {
@@ -232,18 +227,20 @@ export class AppComponent {
         break;
     }
     this.extend(add, this.randomId());
-    this.canvas.add(add);
-    this.selectItemAfterAdded(add);
+    this.canvas.add(add).setActiveObject(add);
+    // this.selectItemAfterAdded(add);
   }
 
   /*Canvas*/
 
   cleanSelect() {
-    this.canvas.deactivateAllWithDispatch().renderAll();
+    // this.canvas.deactivateAllWithDispatch().renderAll();
+    this.canvas.discardActiveObject();
+    this.canvas.requestRenderAll();
   }
 
   selectItemAfterAdded(obj) {
-    this.canvas.deactivateAllWithDispatch().renderAll();
+    // this.canvas.deactivateAllWithDispatch().renderAll();
     this.canvas.setActiveObject(obj);
   }
 
@@ -255,6 +252,7 @@ export class AppComponent {
   }
 
   extend(obj, id) {
+    // obj.set('id', id);
     obj.toObject = (function (toObject) {
       return function () {
         return fabric.util.object.extend(toObject.call(this), {
@@ -348,14 +346,14 @@ export class AppComponent {
       }
       if (clone) {
         clone.set({ left: 10, top: 10 });
-        this.canvas.add(clone);
-        this.selectItemAfterAdded(clone);
+        this.canvas.add(clone).setActiveObject(clone);
+        // this.selectItemAfterAdded(clone);
       }
     }
   }
 
   getId() {
-    this.props.id = this.canvas.getActiveObject().toObject().id;
+    this.props.id = this.canvas.getActiveObject().id;
   }
 
   setId() {
