@@ -1,6 +1,6 @@
 # angular-editor-fabric-js
 
-> Drag-and-drop editor based on Fabricjs for Angular v5 with multiple options
+> Drag-and-drop editor based on Fabricjs for Angular v8 with multiple options
 
 ### Preview
 ![](https://s1.gifgif.io/0qQV2a.gif)
@@ -41,7 +41,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Installation
 
 ```bash
-git clone https://github.com/kevoj/angular-editor-fabric-js.git
+git clone https://github.com/chinamds/angular-editor-fabric-js.git
 cd angular-editor-fabric-js
 npm install
 ```
