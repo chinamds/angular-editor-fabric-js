@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" [(ngModel)]="size.width" (keyup)="changeSize()">
+                            <input type="text" class="form-control" [(ngModel)]="size.width" (keyup)="changeSize($event)">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     Width
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" [(ngModel)]="size.height" (keyup)="changeSize()">
+                            <input type="text" class="form-control" [(ngModel)]="size.height" (keyup)="changeSize($event)">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     Height

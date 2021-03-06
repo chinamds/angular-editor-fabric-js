@@ -9,7 +9,7 @@ declare const fabric: any;
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   private canvas: any;
   protected props: any = {
@@ -28,19 +28,19 @@ export class AppComponent {
     TextDecoration: ''
   };
 
-  private textString: string;
-  private url: string = '';
-  private size: any = {
+  public textString: string;
+  public url: string = '';
+  public size: any = {
     width: 500,
     height: 800
   };
 
-  private json: any;
+  public json: any;
   private globalEditor: boolean = false;
-  private textEditor: boolean = false;
+  public textEditor: boolean = false;
   private imageEditor: boolean = false;
-  private figureEditor: boolean = false;
-  protected selected: any;
+  public figureEditor: boolean = false;
+  public selected: any;
 
   constructor() { }
 
@@ -114,7 +114,7 @@ export class AppComponent {
   /*------------------------Block elements------------------------*/
 
   // Block "Size"
-  changeSize(event: any) {
+  public changeSize(event: any) {
     this.canvas.setWidth(this.size.width);
     this.canvas.setHeight(this.size.height);
   }
@@ -139,8 +139,7 @@ export class AppComponent {
     this.textString = '';
   }
 
-  //Block "Add images"
-
+  // Block "Add images"
   getImgPolaroid(event: any) {
     let el = event.target;
     fabric.Image.fromURL(el.src, (image) => {
@@ -466,17 +465,16 @@ export class AppComponent {
 
 
   removeSelected() {
-    let activeObject = this.canvas.getActiveObject(),
+    const activeObject = this.canvas.getActiveObject(),
       activeGroup = this.canvas.getActiveObjects();
 
     if (activeObject) {
       this.canvas.remove(activeObject);
       // this.textString = '';
-    }
-    else if (activeGroup) {
-      let objectsInGroup = activeGroup.getObjects();
+    } else if (activeGroup) {
+      const objectsInGroup = activeGroup.getObjects();
       this.canvas.discardActiveGroup();
-      let self = this;
+      const self = this;
       objectsInGroup.forEach(function (object) {
         self.canvas.remove(object);
       });
